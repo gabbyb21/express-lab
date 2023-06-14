@@ -2,6 +2,8 @@
 const express = require('express');
 const path = require('path');
 
+const studentDb = require('./data/student-db');
+
 // create the express app
 const app = express();
 
@@ -13,7 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // mount routes
 app.get('/', function(req, res) {
-  res.send('<h1>hello world</h1>');
+  res.redirect('/student');
 });
 
 // tell the app to listen on port 3000
@@ -23,4 +25,10 @@ app.listen(3000, function () {
 
 app.get('/home', function(req, res) { 
   res.render('home');
+});
+
+app.get('/student', function(req, res) {
+  res.render('student/index', {
+    student: studentDb.getAll()
+  });
 });
